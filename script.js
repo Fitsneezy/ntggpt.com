@@ -1,18 +1,22 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // Toggle Developer Menu
-    document.getElementById('dev-menu-toggle').addEventListener('click', () => {
-        document.getElementById('dev-menu').classList.toggle('hidden');
-    });
+    let definitions = [];
 
-    // Toggle Settings Menu
-    document.getElementById('settings-toggle').addEventListener('click', () => {
-        document.getElementById('settings-menu').classList.toggle('hidden');
-    });
+    // Load definitions from definitions.json
+    fetch('definitions.json')
+        .then(response => response.json())
+        .then(data => {
+            definitions = data;
+            console.log('Definitions loaded:', definitions);
+        })
+        .catch(error => console.error('Error loading definitions:', error));
 
-    // Toggle NG GPTs Section
-    document.getElementById('ng-gpt-toggle').addEventListener('click', () => {
-        document.getElementById('ng-gpt-section').classList.toggle('hidden');
-    });
+    // Existing code for other functionalities
+
+    // Function to get definition of a word
+    function getDefinition(word) {
+        const entry = definitions.find(def => def.word.toLowerCase() === word.toLowerCase());
+        return entry ? entry.definition : "Definition not found.";
+    }
 
     // Send Message
     document.getElementById('send-message').addEventListener('click', () => {
@@ -22,7 +26,15 @@ document.addEventListener('DOMContentLoaded', () => {
             const chatBox = document.getElementById('chat-box');
             const messageElement = document.createElement('div');
             messageElement.classList.add('chat-message');
-            messageElement.textContent = message;
+
+            // Check if message is a request for a definition
+            if (message.startsWith('define ')) {
+                const word = message.substring(7).trim();
+                messageElement.textContent = getDefinition(word);
+            } else {
+                messageElement.textContent = message;
+            }
+
             chatBox.appendChild(messageElement);
             input.value = '';
         }
