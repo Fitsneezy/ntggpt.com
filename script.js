@@ -1,22 +1,17 @@
-// script.js
-
 document.addEventListener('DOMContentLoaded', () => {
-    // Dev Menu Toggle
+    // Toggle Developer Menu
     document.getElementById('dev-menu-toggle').addEventListener('click', () => {
-        const devMenu = document.getElementById('dev-menu');
-        devMenu.classList.toggle('hidden');
+        document.getElementById('dev-menu').classList.toggle('hidden');
     });
 
-    // Settings Toggle
+    // Toggle Settings Menu
     document.getElementById('settings-toggle').addEventListener('click', () => {
-        const settingsMenu = document.getElementById('settings-menu');
-        settingsMenu.classList.toggle('hidden');
+        document.getElementById('settings-menu').classList.toggle('hidden');
     });
 
-    // NG GPTs Toggle
+    // Toggle NG GPTs Section
     document.getElementById('ng-gpt-toggle').addEventListener('click', () => {
-        const ngGptSection = document.getElementById('ng-gpt-section');
-        ngGptSection.classList.toggle('hidden');
+        document.getElementById('ng-gpt-section').classList.toggle('hidden');
     });
 
     // Send Message
@@ -35,7 +30,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Save Chat
     document.getElementById('save-chat').addEventListener('click', () => {
-        // Implement chat saving logic
         const chatBox = document.getElementById('chat-box');
         const messages = chatBox.querySelectorAll('.chat-message');
         const chatData = Array.from(messages).map(msg => msg.textContent).join('\n');
@@ -46,9 +40,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const a = document.createElement('a');
         a.href = url;
         a.download = 'chat.ntggpt';
-        document.body.appendChild(a);
         a.click();
-        document.body.removeChild(a);
         URL.revokeObjectURL(url);
     });
 });
